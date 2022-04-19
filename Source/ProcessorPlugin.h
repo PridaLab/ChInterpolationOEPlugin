@@ -5,16 +5,16 @@
 #include <ProcessorHeaders.h>
 
 //namespace must be an unique name for your plugin
-namespace ProcessorPluginSpace
+namespace ChInterpSpace
 {
-	class ProcessorPlugin : public GenericProcessor
+	class ChInterp : public GenericProcessor
 	{
 	public:
 		/** The class constructor, used to initialize any members. */
-		ProcessorPlugin();
+		ChInterp();
 
 		/** The class destructor, used to deallocate memory */
-		~ProcessorPlugin();
+		~ChInterp();
 
 		/** Indicates if the processor has a custom editor. Defaults to false */
 		//bool hasEditor() const { return true; }

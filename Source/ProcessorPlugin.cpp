@@ -1,19 +1,19 @@
-#include "ProcessorPlugin.h"
+#include "ChInterp.h"
 
 using namespace ProcessorPluginSpace;
 
 //Change all names for the relevant ones, including "Processor Name"
-ProcessorPlugin::ProcessorPlugin() : GenericProcessor("Processor Name")
+ChInterp::ChInterp() : GenericProcessor("Ch-interp")
 {
 
 }
 
-ProcessorPlugin::~ProcessorPlugin()
+ChInterp::~ChInterp()
 {
 
 }
 
-void ProcessorPlugin::process(AudioSampleBuffer& buffer)
+void ChInterp::process(AudioSampleBuffer& buffer)
 {
 	/** 
 	If the processor needs to handle events, this method must be called onyl once per process call
