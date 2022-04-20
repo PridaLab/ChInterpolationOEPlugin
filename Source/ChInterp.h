@@ -17,10 +17,10 @@ namespace ChInterpSpace
 		~ChInterp();
 
 		/** Indicates if the processor has a custom editor. Defaults to false */
-		//bool hasEditor() const { return true; }
+		bool hasEditor() const { return true; }
 
 		/** If the processor has a custom editor, this method must be defined to instantiate it. */
-		//AudioProcessorEditor* createEditor() override;
+		AudioProcessorEditor* createEditor() override;
 
 		/** Optional method that informs the GUI if the processor is ready to function. If false acquisition cannot start. Defaults to true */
 		//bool isReady();
@@ -36,6 +36,9 @@ namespace ChInterpSpace
 		and spikes) is contained in the "events" variable.
 		*/
 		void process(AudioSampleBuffer& buffer) override;
+
+		int leftIndex (int inputChannel[], int currIndex);
+		int rightIndex (int inputChannel[], int currIndex);
 
 		/** Handles events received by the processor
 
@@ -69,7 +72,13 @@ namespace ChInterpSpace
 
 		*/
 		//void updateSettings() override;
-
+	private:
+		int left_chIdx;
+		int right_chIdx;
+		float dist_ch;
+		int og_channelArray[8];
+		int to_channelArray[8];
+		AudioSampleBuffer channelBuffer;
 	};
 }
 
