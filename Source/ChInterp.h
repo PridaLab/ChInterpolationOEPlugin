@@ -1,6 +1,6 @@
 //This prevents include loops. We recommend changing the macro to a name suitable for your plugin
-#ifndef PROCESSORPLUGIN_H_DEFINED
-#define PROCESSORPLUGIN_H_DEFINED
+#ifndef CHINTERP_H_DEFINED
+#define CHINTERP_H_DEFINED
 
 #include <ProcessorHeaders.h>
 
@@ -16,11 +16,13 @@ namespace ChInterpSpace
 		/** The class destructor, used to deallocate memory */
 		~ChInterp();
 
+		/** If the processor has a custom editor, this method must be defined to instantiate it. */
+    	AudioProcessorEditor* createEditor() override;
+
 		/** Indicates if the processor has a custom editor. Defaults to false */
 		bool hasEditor() const { return true; }
 
-		/** If the processor has a custom editor, this method must be defined to instantiate it. */
-		AudioProcessorEditor* createEditor() override;
+
 
 		/** Optional method that informs the GUI if the processor is ready to function. If false acquisition cannot start. Defaults to true */
 		//bool isReady();

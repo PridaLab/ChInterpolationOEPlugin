@@ -1,5 +1,5 @@
 #include "ChInterp.h"
-
+#include "ChInterpEditor.h"
 using namespace ChInterpSpace;
 
 //Change all names for the relevant ones, including "Processor Name"
@@ -121,4 +121,13 @@ int ChInterp::rightIndex(int inputChannel[], int currIndex){
 
     return rightIndex(inputChannel,currIndex+1);
 		    
+}
+
+AudioProcessorEditor* ChInterp::createEditor()
+{
+    editor = new ChInterpEditor (this, true);
+
+    //std::cout << "Creating editor." << std::endl;
+
+    return editor;
 }
