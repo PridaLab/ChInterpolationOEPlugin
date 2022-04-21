@@ -1,48 +1,53 @@
-# Open Ephys plugin template
+# Open Ephys channel interpolation plugin
 
-This repository contains a template for building plugins for the [Open Ephys GUI](https://github.com/open-ephys/plugin-GUI). Information on the plugin architecture can be found on [our wiki](https://open-ephys.atlassian.net/wiki/spaces/OEW/pages/950363/Plugin+architecture).
+This repository contains a plugin for the [Open Ephys GUI](https://github.com/open-ephys/plugin-GUI) to interpolate channels.
 
-## Creating a new plugin
+## Plugin configuration
+The plugin receives 8 channels as input. You can use the `ChannelMap` plugin to select the channels.
 
-1. Add source files to the Source folder. The existing files can be used as a template
-2. [Edit the OpenEphysLib.cpp file accordingly](https://open-ephys.atlassian.net/wiki/spaces/OEW/pages/46596128/OpenEphysLib+file)
-3. [Create the build files through CMake](https://open-ephys.atlassian.net/wiki/spaces/OEW/pages/1259110401/Plugin+CMake+Builds)
+![CNN-ripple](ch-interp-plugin.png)
+- **Source Channels:** indicates the channels used as a source (>=0) and the desired interpolated ones (-1). Source channels (>=0) will be indicated in orange, whereas the ones that need to be interpolated must be indicated with a -1 (the box will turn grey).
+- **Recipient Channels:** indicates the channels where the source channels will be saved (one to one mapping). 
 
-## Using external libraries
+## Compiling the plugin from source
 
-To link the plugin to external libraries, it is necessary to manually edit the Build/CMakeLists.txt file. The code for linking libraries is located in comments at the end.
-For most common libraries, the `find_package` option is recommended. An example would be
+1. Clone this repository in the same directory where [`plugin-GUI`](https://github.com/open-ephys/plugin-GUI) is located.
+3. Go to the `Build` directory (<ch_interp_path>/Build/) and execute to create the CMake project:
 
-```cmake
-find_package(ZLIB)
-target_link_libraries(${PLUGIN_NAME} ${ZLIB_LIBRARIES})
-target_include_directories(${PLUGIN_NAME} PRIVATE ${ZLIB_INCLUDE_DIRS})
+For Linux:
+```
+cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release  ..
+make
+make install
 ```
 
-If there is no standard package finder for cmake, `find_library`and `find_path` can be used to find the library and include files respectively. The commands will search in a variety of standard locations For example
+For Windows:
+```
+cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_CXX_FLAGS="/EHsc /utf-8" ..
+```
+Open Visual Studio 16 2019 and compile and install the solution (see notes below on how to install Visual Studio).
 
-```cmake
-find_library(ZMQ_LIBRARIES NAMES libzmq-v120-mt-4_0_4 zmq zmq-v120-mt-4_0_4) #the different names after names are not a list of libraries to include, but a list of possible names the library might have, useful for multiple architectures. find_library will return the first library found that matches any of the names
-find_path(ZMQ_INCLUDE_DIRS zmq.h)
+## How to install Visual Studio 2019 and Open Ephys from source
+1. Clone [Open Ephys GUI repository](https://github.com/open-ephys/plugin-GUI).
 
-target_link_libraries(${PLUGIN_NAME} ${ZMQ_LIBRARIES})
-target_include_directories(${PLUGIN_NAME} PRIVATE ${ZMQ_INCLUDE_DIRS})
+2. Download and install Visual Studio 2019.
+
+3. Run `Resources/DLLs/FrontPanelUSB-DriverOnly-4.4.0.exe` to install DAQ drivers if needed.
+
+4. Install C++ compiling tools for Visual Studio 2019 and create a new project so everything gets [properly configured](https://stackoverflow.com/questions/31619296/cmake-does-not-find-visual-c-compiler).
+
+5. Download and install CMake. Select "Add CMake to the system PATH".
+
+6. Add the line `add_definitions(-DWIN32)` into line 107 of CMakeLists.txt.
+
+7. Open PowerShell, go to folder plugin-GUI/Build and run CMake. 
+
+```
+cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_CXX_FLAGS="/EHsc /utf-8" ..
 ```
 
-### Providing libraries for Windows
+`-A` indicates the target architecture, which must be specified accordingly.
 
-Since Windows does not have standardized paths for libraries, as Linux and macOS do, it is sometimes useful to pack the appropriate Windows version of the required libraries alongside the plugin.
-To do so, a _libs_ directory has to be created **at the top level** of the repository, alongside this README file, and files from all required libraries placed there. The required folder structure is:
+8. Open `open-ephys-GUI.sln`, which can be found in the `Build` directory, with Visual Studio 2019.
 
-```
-    libs
-    ├─ include           #library headers
-    ├─ lib
-        ├─ x64           #64-bit compile-time (.lib) files
-        └─ x86           #32-bit compile time (.lib) files, if needed
-    └─ bin
-        ├─ x64           #64-bit runtime (.dll) files
-        └─ x86           #32-bit runtime (.dll) files, if needed
-```
-
-DLLs in the bin directories will be copied to the open-ephys GUI _shared_ folder when installing.
+9. Compile the solution.
