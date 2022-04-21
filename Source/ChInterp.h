@@ -22,7 +22,8 @@ namespace ChInterpSpace
 		/** Indicates if the processor has a custom editor. Defaults to false */
 		bool hasEditor() const { return true; }
 
-
+		/** Method to update variables from Editor*/
+   		void setParameter(int parameterIndex, float newValue) override; 
 
 		/** Optional method that informs the GUI if the processor is ready to function. If false acquisition cannot start. Defaults to true */
 		//bool isReady();
@@ -75,11 +76,11 @@ namespace ChInterpSpace
 		*/
 		//void updateSettings() override;
 	private:
-		int left_chIdx;
-		int right_chIdx;
+		int left_ch;
+		int right_ch;
 		float dist_ch;
-		int og_channelArray[8];
-		int to_channelArray[8];
+		int og_channelArray[8] = {0,-1,-1,3,-1,-1,-1,7};;
+		int to_channelArray[8] = {0,1,2,3,4,5,6,7};;
 		AudioSampleBuffer channelBuffer;
 	};
 }
