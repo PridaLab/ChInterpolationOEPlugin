@@ -3,11 +3,13 @@
 This repository contains a plugin for the [Open Ephys GUI](https://github.com/open-ephys/plugin-GUI) to interpolate channels.
 
 ## Plugin configuration
-The plugin receives 8 channels as input. You can use the `ChannelMap` plugin to select the channels.
+The plugin receives N channels as input (2<=N<=7), and interpolate the missing ones with a weighted linear approximation.
 
 ![CNN-ripple](ch-interp-plugin.png)
 - **Source Channels:** indicates the channels used as a source (>=0) and the desired interpolated ones (-1). Source channels (>=0) will be indicated in orange, whereas the ones that need to be interpolated must be indicated with a -1 (the box will turn grey).
 - **Recipient Channels:** indicates the channels where the source channels will be saved (one to one mapping). 
+
+For instance, in the image provided, the plugin takes channels (0,4,12) and uses them to interpolate the missing 5 channels (2 interpolations between 0&4, 3 interpolations between 4&12). The resulting 8 channels (3 provided, 5 interpolated) are saved in the 0-8 channels. 
 
 ## Compiling the plugin from source
 
