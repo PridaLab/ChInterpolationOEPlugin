@@ -57,7 +57,7 @@ void ChInterp::process(AudioSampleBuffer& buffer)
 	channelBuffer = buffer;
 
 	//Set all to zero
-	for (int ch = 0; ch < 16 ; ++ch)
+	for (int ch = 0; ch < buffer.getNumChannels() ; ++ch)
 	{
 		int nSamples = getNumSamples(ch);
 		float* ptr = buffer.getWritePointer(ch);

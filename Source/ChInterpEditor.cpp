@@ -201,70 +201,89 @@ void ChInterpEditor::labelTextChanged(Label* label)
    //if change ogChannel
    if (label == ogChannel_0)
    {
+      if (requestedValue<0)
+      {
+         CoreServices::sendStatusMessage("Left most channel must be provided.");
+         return;
+      }
       getProcessor()->setParameter(0, requestedValue);
    }
    if (label == ogChannel_1)
    {
       getProcessor()->setParameter(1, requestedValue);
    }
-   if (label == ogChannel_2)
+   else if (label == ogChannel_2)
    {
       getProcessor()->setParameter(2, requestedValue);
    }
-   if (label == ogChannel_3)
+   else if (label == ogChannel_3)
    {
       getProcessor()->setParameter(3, requestedValue);
    }
-   if (label == ogChannel_4)
+   else if (label == ogChannel_4)
    {
       getProcessor()->setParameter(4, requestedValue);
    }
-   if (label == ogChannel_5)
+   else if (label == ogChannel_5)
    {
       getProcessor()->setParameter(5, requestedValue);
    }
-   if (label == ogChannel_6)
+   else if (label == ogChannel_6)
    {
       getProcessor()->setParameter(6, requestedValue);
    }
-   if (label == ogChannel_7)
-   {
+   else if (label == ogChannel_7)
+   {      
+      if (requestedValue<0)
+      {
+         CoreServices::sendStatusMessage("Right most channel must be provided.");
+         return;
+      }
       getProcessor()->setParameter(7, requestedValue);
    }
-
-   //if change toChannel
-   if (label == toChannel_0)
-   {
-      getProcessor()->setParameter(10, requestedValue);
+   else
+   {  
+      Array<int> chans = getActiveChannels();
+      if (requestedValue<0)
+      {
+         CoreServices::sendStatusMessage("Recipient channel must be a valid number.");
+         return;
+      }
+      //if change toChannel
+      if (label == toChannel_0)
+      {
+         getProcessor()->setParameter(10, requestedValue);
+      }
+      if (label == toChannel_1)
+      {
+         getProcessor()->setParameter(11, requestedValue);
+      }
+      if (label == toChannel_2)
+      {
+         getProcessor()->setParameter(12, requestedValue);
+      }
+      if (label == toChannel_3)
+      {
+         getProcessor()->setParameter(13, requestedValue);
+      }
+      if (label == toChannel_4)
+      {
+         getProcessor()->setParameter(14, requestedValue);
+      }
+      if (label == toChannel_5)
+      {
+         getProcessor()->setParameter(15, requestedValue);
+      }
+      if (label == toChannel_6)
+      {
+         getProcessor()->setParameter(16, requestedValue);
+      }
+      if (label == toChannel_7)
+      {
+         getProcessor()->setParameter(17, requestedValue);
+      }
    }
-   if (label == toChannel_1)
-   {
-      getProcessor()->setParameter(11, requestedValue);
-   }
-   if (label == toChannel_2)
-   {
-      getProcessor()->setParameter(12, requestedValue);
-   }
-   if (label == toChannel_3)
-   {
-      getProcessor()->setParameter(13, requestedValue);
-   }
-   if (label == toChannel_4)
-   {
-      getProcessor()->setParameter(14, requestedValue);
-   }
-   if (label == toChannel_5)
-   {
-      getProcessor()->setParameter(15, requestedValue);
-   }
-   if (label == toChannel_6)
-   {
-      getProcessor()->setParameter(16, requestedValue);
-   }
-   if (label == toChannel_7)
-   {
-      getProcessor()->setParameter(17, requestedValue);
-   }
+   
 
 }
 
