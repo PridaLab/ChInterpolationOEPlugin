@@ -2,6 +2,16 @@
 
 This repository contains a plugin for the [Open Ephys GUI](https://github.com/open-ephys/plugin-GUI) to interpolate channels.
 
+## Installing the plugin
+
+Download the latest release for your operating system from https://github.com/PridaLab/Ch_interp_OEplugin/releases.
+
+For Linux:
+1. Copy the `CNNRippleDetectorOEPlugin.so` file to Open Ephys `plugins` folder.
+
+For Windows:
+1. Copy the `CNNRippleDetectorOEPlugin.dll` file to Open Ephys `plugins` folder.
+
 ## Plugin configuration
 The plugin receives N channels as input (2<=N<=7), and interpolate the missing ones with a weighted linear approximation.
 
