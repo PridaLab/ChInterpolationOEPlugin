@@ -37,7 +37,7 @@ e.g.:
             /Build
 ```
 
-3. From inside the `Build` directory (<ch_interp_path>/Build/) execute to create the CMake project:
+2. From inside the `Build` directory (<ch_interp_path>/Build/), execute the following commands to create the CMake project:
 
 For Linux:
 ```
