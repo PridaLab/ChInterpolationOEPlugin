@@ -6,8 +6,8 @@ using namespace ChInterpSpace;
 //Change all names for the relevant ones, including "Processor Name"
 ChInterp::ChInterp() : GenericProcessor("Ch-interp")
 {
-	int og_channelArray[8] = {0,-1,-1,3,-1,-1,-1,7};
-	int to_channelArray[8] = {0,1,2,3,4,5,6,7};
+	int og_channelArray[8] = {1,-1,-1,4,-1,-1,-1,8};
+	int to_channelArray[8] = {1,2,3,4,5,6,7,8};
 
 }
 
@@ -69,20 +69,20 @@ void ChInterp::process(AudioSampleBuffer& buffer)
 
 	for (int ch=0; ch<8; ++ch)
 	{
-    	if (og_channelArray[ch]> -1) //if channel provided then just reallocate on new place
+    	if (og_channelArray[ch]> 0) //if channel provided then just reallocate on new place
     	{
-			int nSamples = getNumSamples(og_channelArray[ch]);
-			float* toPtr = buffer.getWritePointer(to_channelArray[ch]); //get pointer to new location
+			int nSamples = getNumSamples(og_channelArray[ch]-1);
+			float* toPtr = buffer.getWritePointer(to_channelArray[ch]-1); //get pointer to new location
 			for (int n = 0; n < nSamples; ++n)
 			{
-                const float sample = *channelBuffer.getReadPointer (og_channelArray[ch], n); //get value from old location
+                const float sample = *channelBuffer.getReadPointer (og_channelArray[ch]-1, n); //get value from old location
                 *(toPtr + n) = sample; //save value to new location
 			}
     	}
     	else //if channel not provided then interpolate
     	{
-			int nSamples = getNumSamples(to_channelArray[ch]);
-			float* toPtr = buffer.getWritePointer(to_channelArray[ch]); //get pointer to memory space to save the interpolated channel
+			int nSamples = getNumSamples(to_channelArray[ch]-1);
+			float* toPtr = buffer.getWritePointer(to_channelArray[ch]-1); //get pointer to memory space to save the interpolated channel
 
 			int left_ch = leftIndex(og_channelArray, ch); //get closest provided channel on the left
 			int right_ch = rightIndex(og_channelArray, ch); //get closest provided channel on the right
@@ -90,8 +90,8 @@ void ChInterp::process(AudioSampleBuffer& buffer)
 
 			for (int n=0; n<nSamples; ++n)
 			{
-                const float leftVal = *channelBuffer.getReadPointer (og_channelArray[left_ch], n); //get value of left channel
-                const float rightVal = *channelBuffer.getReadPointer (og_channelArray[right_ch], n); //get value of right channel
+                const float leftVal = *channelBuffer.getReadPointer (og_channelArray[left_ch]-1, n); //get value of left channel
+                const float rightVal = *channelBuffer.getReadPointer (og_channelArray[right_ch]-1, n); //get value of right channel
 				*(toPtr + n) = leftVal + ((ch - left_ch)/dist_ch)*(rightVal - leftVal); //compute weighted linear interpolation
 			}			
 

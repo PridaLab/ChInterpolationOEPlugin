@@ -79,8 +79,8 @@ namespace ChInterpSpace
 		int left_ch;
 		int right_ch;
 		float dist_ch;
-		int og_channelArray[8] = {0,-1,-1,3,-1,-1,-1,7};;
-		int to_channelArray[8] = {0,1,2,3,4,5,6,7};;
+		int og_channelArray[8] = {1,-1,-1,4,-1,-1,-1,8};;
+		int to_channelArray[8] = {1,2,3,4,5,6,7,8};;
 		AudioSampleBuffer channelBuffer;
 	};
 }
